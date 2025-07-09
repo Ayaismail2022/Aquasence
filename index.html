@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>Water Quality Awareness</title>
+        <link href="images/downld-removebg-preview.png" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <style>
+            /* ===== الإضافة الجديدة هنا ===== */
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body, a, button { 
+                cursor: none !important;
+            }
+            
+            #cursor-droplet {
+                width: 30px; height: 30px; border-radius: 7px 50% 50% 50%;
+                background-color: rgba(59, 130, 246, 0.4); border: 1px solid rgba(59, 130, 246, 0.7);
+                position: fixed; z-index: 9999; pointer-events: none;
+                opacity: 0; 
+                top: 0; left: 0;
+                transform: translate(-50%, -50%) rotate(45deg); 
+                transition: width 0.2s, height 0.2s, background-color 0.2s;
+            }
+            #cursor-droplet.grow {
+                width: 50px; height: 50px;
+                background-color: rgba(59, 130, 246, 0.2);
+            }
+            @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+            @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+            
+            .animate-fadeInDown { animation: fadeInDown 0.8s ease-out forwards; }
+            .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+        </style>
+    </head>
+    <body class="bg-cyan-50 text-gray-800 flex flex-col min-h-screen">
+        <div id="cursor-droplet"></div>
+        <header
+            class="bg-white/80 backdrop-blur-sm shadow-md p-4 flex justify-between items-center sticky top-0 z-50 animate-fadeInDown">
+
+            <a href="index.html"
+                class="flex items-center space-x-3 transform hover:scale-105 transition-transform duration-300">
+                <img src="images/downld.png" alt="Aquasence Logo"
+                    class="h-10 w-auto">
+                <span class="text-3xl font-bold text-blue-600">Aquasence</span>
+            </a>
+
+            <nav class="flex items-center space-x-2 md:space-x-4">
+                <a href="index.html"
+                    class="px-3 py-2 text-gray-700 font-medium hover:text-blue-600 transform hover:-translate-y-0.5 transition-transform duration-300">Home</a>
+                <a href="about.html"
+                    class="px-3 py-2 text-gray-700 font-medium hover:text-blue-600 transform hover:-translate-y-0.5 transition-transform duration-300">About</a>
+                <a href="Contact.html"
+                    class="px-3 py-2 text-gray-700 font-medium hover:text-blue-600 transform hover:-translate-y-0.5 transition-transform duration-300">Contact</a>
+
+                <a href="loading.html"
+                    class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 transform hover:scale-105 transition-transform duration-300">Login</a>
+                <button id="logout-btn" onclick="logout()"
+                    style="display: none;"
+                    class="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 transform hover:scale-105 transition-transform duration-300">Log
+                    Out</button>
+            </nav>
+        </header>
+
+        <main class="flex-grow">
+            <div class="text-center my-16 px-4">
+                <h2
+                    class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 animate-fadeInUp"
+                    style="color: #0077b6; animation-delay: 0.2s;">Protect Our
+                    Water, Protect Our Future</h2>
+                <h3
+                    class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-fadeInUp"
+                    style="animation-delay: 0.4s;">Learn how to test, conserve,
+                    and improve water quality.</h3>
+            </div>
+            <section class="py-12 px-6 bg-cyan-50">
+                <div
+                    class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group"
+                        data-aos="fade-up">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="images/test.jpg" alt="Testing Water"
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <a id="protected-link" href="Water testing.html"><h3
+                                    class="text-2xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Water
+                                    Testing</h3></a>
+                            <p class="text-gray-600">Discover how to measure
+                                water quality effectively.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="images/pollution.jpg" alt="Polluted Water"
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/pure.jpg"
+                                alt="Cleaning polluted water"
+                                class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                        </div>
+                        <div class="p-6">
+                            <a href="#pollution"><h3
+                                    class="text-2xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Solve water Pollution</h3></a>
+                            <p class="text-gray-600">Understand the causes and
+                                solutions for water pollution.</p>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group"
+                        data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="images/Conservation.jpg"
+                                alt="Water Conservation"
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/save water.jpg"
+                                alt="Saving water drops"
+                                class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-all duration-500 opacity-0 group-hover:opacity-100">
+                        </div>
+                        <div class="p-6">
+                            <a href="#conservation"><h3
+                                    class="text-2xl font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Water
+                                    Conservation</h3></a>
+                            <p class="text-gray-600">Explore tips to save water
+                                in your daily life.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+             <!-- Page Title Section -->
+            <section class="py-16 text-center">
+                <div class="max-w-4xl mx-auto px-6" data-aos="fade-up">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-4">Global Water Quality Overview</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        A comparative look at water quality index scores in various countries. All data is approximate and for illustrative purposes only.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Countries Comparison Section -->
+            <section class="pb-16 md:pb-24">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        
+                        <!-- Left Column: Arab Countries -->
+                        <div data-aos="fade-right">
+                            <h3 class="text-3xl font-bold text-gray-900 mb-8 border-b-2 border-blue-200 pb-2">Arab Countries</h3>
+                            <div class="space-y-8">
+                                <!-- Country Card: Egypt -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/eg.png" alt="Flag of Egypt" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Egypt</h4>
+                                            <span class="text-xl font-bold text-yellow-600">72/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full">Fair</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Faces challenges with Nile pollution and agricultural runoff, but major efforts are underway to improve water treatment.</p>
+                                    </div>
+                                </div>
+                                <!-- Country Card: Saudi Arabia -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/sa.png" alt="Flag of Saudi Arabia" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Saudi Arabia</h4>
+                                            <span class="text-xl font-bold text-blue-600">85/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-blue-100 text-blue-800 rounded-full">Good</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Heavily relies on desalination. Water quality is generally high due to advanced technology, though it is energy-intensive.</p>
+                                    </div>
+                                </div>
+                                <!-- Country Card: UAE -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/ae.png" alt="Flag of UAE" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">UAE</h4>
+                                            <span class="text-xl font-bold text-blue-600">88/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-blue-100 text-blue-800 rounded-full">Good</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">A world leader in desalination and water reuse, ensuring high-quality tap water for its population through rigorous standards.</p>
+                                    </div>
+                                </div>
+                                <!-- New Country: Jordan -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/jo.png" alt="Flag of Jordan" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Jordan</h4>
+                                            <span class="text-xl font-bold text-yellow-600">78/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full">Fair</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">As one of the world's most water-scarce countries, Jordan focuses heavily on groundwater management and wastewater treatment.</p>
+                                    </div>
+                                </div>
+                                <!-- New Country: Oman -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/om.png" alt="Flag of Oman" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Oman</h4>
+                                            <span class="text-xl font-bold text-blue-600">87/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-blue-100 text-blue-800 rounded-full">Good</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Combines modern desalination with traditional 'aflaj' irrigation systems. Strong investment ensures high quality supply.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: International Countries -->
+                        <div data-aos="fade-left" data-aos-delay="200">
+                            <h3 class="text-3xl font-bold text-gray-900 mb-8 border-b-2 border-green-200 pb-2">International Countries</h3>
+                            <div class="space-y-8">
+                                <!-- Country Card: Switzerland -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/ch.png" alt="Flag of Switzerland" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Switzerland</h4>
+                                            <span class="text-xl font-bold text-green-600">97/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-green-100 text-green-800 rounded-full">Excellent</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Renowned for its pristine Alpine lakes and springs. Strict environmental laws ensure tap water is of the highest quality.</p>
+                                    </div>
+                                </div>
+                                <!-- Country Card: Canada -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/ca.png" alt="Flag of Canada" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Canada</h4>
+                                            <span class="text-xl font-bold text-green-600">95/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-green-100 text-green-800 rounded-full">Excellent</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Possesses vast freshwater resources. Water quality is exceptional in most urban areas due to strong federal protection standards.</p>
+                                    </div>
+                                </div>
+                                 <!-- Country Card: Germany -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/de.png" alt="Flag of Germany" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Germany</h4>
+                                            <span class="text-xl font-bold text-green-600">93/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-green-100 text-green-800 rounded-full">Excellent</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Famous for its rigorous public health standards and advanced wastewater treatment, leading to high public trust in tap water.</p>
+                                    </div>
+                                </div>
+                                <!-- Country Card: Japan -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/jp.png" alt="Flag of Japan" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">Japan</h4>
+                                            <span class="text-xl font-bold text-green-600">92/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-green-100 text-green-800 rounded-full">Excellent</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Maintains very high standards for tap water through multi-stage purification processes and strict government oversight.</p>
+                                    </div>
+                                </div>
+                                <!-- Country Card: United States -->
+                                <div class="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4">
+                                    <img src="https://flagcdn.com/w40/us.png" alt="Flag of USA" class="w-12 h-auto rounded">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-xl font-bold text-gray-800">United States</h4>
+                                            <span class="text-xl font-bold text-blue-600">84/100</span>
+                                        </div>
+                                        <div class="mt-1"><span class="text-xs font-semibold px-2 py-1 bg-blue-100 text-blue-800 rounded-full">Good</span></div>
+                                        <p class="mt-3 text-gray-600 text-sm leading-relaxed">Quality is generally high under the Safe Drinking Water Act, but varies by region, with challenges related to aging infrastructure.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="pollution">
+                <div class="max-w-7xl mx-auto py-16 px-6 sm:px-8 lg:px-16">
+                <!-- Increased gap from gap-12 to gap-20 -->
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+                    <!-- Text Content Column -->
+                    <div data-aos="fade-right">
+                        <h1
+                            class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-6">Solve
+                            Water Pollution</h1>
+                        <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                            Solving water pollution requires a combination of
+                            actions at individual, community, and governmental
+                            levels. Here are some key approaches:
+                        </p>
+                        <ol class="space-y-6">
+                            <li class="flex items-start">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">1</span>
+                                <div>
+                                    <h3
+                                        class="font-semibold text-xl text-gray-800">Fix
+                                        Leaks and Drips</h3>
+                                    <p class="mt-1 text-gray-600">Repair leaking
+                                        taps, pipes, and appliances to prevent
+                                        water wastage.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">2</span>
+                                <div>
+                                    <h3
+                                        class="font-semibold text-xl text-gray-800">Efficient
+                                        Irrigation</h3>
+                                    <p class="mt-1 text-gray-600">Use drip
+                                        irrigation systems and water plants
+                                        during cooler parts of the day to
+                                        minimize evaporation.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">3</span>
+                                <div>
+                                    <h3
+                                        class="font-semibold text-xl text-gray-800">Rainwater
+                                        Harvesting</h3>
+                                    <p class="mt-1 text-gray-600">Collect and
+                                        store rainwater for household or
+                                        agricultural use.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">4</span>
+                                <div>
+                                    <h3
+                                        class="font-semibold text-xl text-gray-800">Water-Saving
+                                        Devices</h3>
+                                    <p class="mt-1 text-gray-600">Install
+                                        low-flow faucets, toilets, and
+                                        showerheads to reduce water usage.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">5</span>
+                                <div>
+                                    <h3
+                                        class="font-semibold text-xl text-gray-800">Reuse
+                                        and Recycle</h3>
+                                    <p class="mt-1 text-gray-600">Reuse
+                                        greywater (e.g., from washing machines)
+                                        for tasks like watering plants.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">6</span>
+                                <div>
+                                    <h3
+                                        class="font-semibold text-xl text-gray-800">Educate
+                                        and Raise Awareness</h3>
+                                    <p class="mt-1 text-gray-600">Inform
+                                        communities about the importance of
+                                        water conservation and teach sustainable
+                                        practices.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span
+                                    class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">7</span>
+                                <div>
+                                    <h3
+                                        class="font-semibold text-xl text-gray-800">Reduce
+                                        Industrial Water Use</h3>
+                                    <p class="mt-1 text-gray-600">Industries can
+                                        recycle process water and use advanced
+                                        water-saving technologies.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                    <!-- ======== IMAGE CONTAINER (SMALLER & ALIGNED RIGHT) ======== -->
+                    <div class="flex justify-end items-center"
+                        data-aos="fade-left" data-aos-delay="200">
+                        <div class="flex justify-end items-center lg:pl-10"
+                            data-aos="fade-left" data-aos-delay="200">
+                            <div class="relative group w-[500px] h-[400px] rounded-xl overflow-hidden border-2 border-black shadow-lg">
+                                <!-- Default Image -->
+                                <img src="images/pollution.jpg"
+                                    alt="Polluted Water"
+                                    class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:opacity-0">
+                                <!-- Hover Image -->
+                                <img src="images/pure.jpg"
+                                    alt="Clean, pure water"
+                                    class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100 group-hover:scale-110">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id= "conservation">
+                 <div class="max-w-7xl mx-auto py-16 px-6 sm:px-8 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Text Content Column -->
+                <div data-aos="fade-right">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-6">Water Conservation</h1>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                        Water Conservation is the practice of using water efficiently to reduce unnecessary waste. It ensures that water resources are available for future generations while protecting the environment. Here are some key approaches:
+                    </p>
+                    <ol class="space-y-6">
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">1</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-gray-800">Fix Leaks and Drips</h3>
+                                <p class="mt-1 text-gray-600">Repair leaking taps, pipes, and appliances to prevent water wastage.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">2</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-gray-800">Efficient Irrigation</h3>
+                                <p class="mt-1 text-gray-600">Use drip irrigation systems and water plants during cooler parts of the day to minimize evaporation.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">3</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-gray-800">Rainwater Harvesting</h3>
+                                <p class="mt-1 text-gray-600">Collect and store rainwater for household or agricultural use.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">4</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-gray-800">Water-Saving Devices</h3>
+                                <p class="mt-1 text-gray-600">Install low-flow faucets, toilets, and showerheads to reduce water usage.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">5</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-gray-800">Reuse and Recycle</h3>
+                                <p class="mt-1 text-gray-600">Reuse greywater (e.g., from washing machines) for tasks like watering plants.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">6</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-gray-800">Educate and Raise Awareness</h3>
+                                <p class="mt-1 text-gray-600">Inform communities about the importance of water conservation and teach sustainable practices.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-4">7</span>
+                            <div>
+                                <h3 class="font-semibold text-xl text-gray-800">Reduce Industrial Water Use</h3>
+                                <p class="mt-1 text-gray-600">Industries can recycle process water and use advanced water-saving technologies.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Image Column -->
+                <div class="flex justify-end items-center"
+                        data-aos="fade-left" data-aos-delay="200">
+                        <div class="flex justify-end items-center lg:pl-10"
+                            data-aos="fade-left" data-aos-delay="200">
+                            <div class="relative group w-[500px] h-[400px] rounded-xl overflow-hidden border-2 border-black shadow-lg">
+                                <!-- Default Image -->
+                                <img src="images/Conservation.jpg"
+                                    alt="Polluted Water"
+                                    class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:opacity-0">
+                                <!-- Hover Image -->
+                                <img src="images/save water.jpg"
+                                    alt="Clean, pure water"
+                                    class="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100 group-hover:scale-110">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+            </section>
+        </main>
+
+        <footer class="bg-gray-900 text-gray-300 mt-16">
+        <div class="max-w-7xl mx-auto py-12 px-6 sm:px-8 lg:px-16 grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div class="lg:col-span-2">
+                <h2 class="text-2xl font-bold text-white mb-4">Aquasence</h2>
+                <p class="text-gray-400 mb-6">Dedicated to raising awareness about water quality, conservation, and protecting our most vital resource for future generations.</p>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors duration-300"><span class="sr-only">Facebook</span><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg></a>
+                    <a href="https://www.instagram.com" target="_blank" class="text-gray-400 hover:text-pink-500 transition-colors duration-300"><span class="sr-only">Instagram</span><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.013-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.345 2.525c.636-.247 1.363-.416 2.427-.465C9.793 2.013 10.147 2 12.315 2zm-1.163 1.542c-2.365 0-2.69.01-3.638.056-.948.045-1.503.207-1.928.372a3.344 3.344 0 00-1.217.822 3.344 3.344 0 00-.822 1.217c-.165.425-.327.98-.372 1.928-.046.948-.056 1.273-.056 3.638s.01 2.69.056 3.638c.045.948.207 1.503.372 1.928a3.344 3.344 0 00.822 1.217 3.344 3.344 0 001.217.822c.425.165.98.327 1.928.372.948.046 1.273.056 3.638.056s2.69-.01 3.638-.056c.948-.045 1.503-.207 1.928-.372a3.344 3.344 0 001.217-.822 3.344 3.344 0 00.822-1.217c.165-.425.327-.98.372-1.928.046-.948.056-1.273-.056-3.638s-.01-2.69-.056-3.638c-.045-.948-.207-1.503-.372-1.928a3.344 3.344 0 00-.822-1.217 3.344 3.344 0 00-1.217-.822c-.425-.165-.98-.327-1.928-.372-.948-.046-1.273-.056-3.638-.056zM12 8.35a3.65 3.65 0 100 7.3 3.65 3.65 0 000-7.3zM12 14a2 2 0 110-4 2 2 0 010 4zm6.406-7.185a.96.96 0 100-1.92.96.96 0 000 1.92z" clip-rule="evenodd" /></svg></a>
+                    <a href="https://wa.me/your-number" target="_blank" class="text-gray-400 hover:text-green-500 transition-colors duration-300"><span class="sr-only">Whatsapp</span><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" /></svg></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-3">
+                    <li><a href="index.html" class="hover:text-blue-400 transition-colors duration-300">Home</a></li>
+                    <li><a href="about.html" class="hover:text-blue-400 transition-colors duration-300">About Us</a></li>
+                    <li><a href="Water testing.html" class="hover:text-blue-400 transition-colors duration-300">Water Testing</a></li>
+                    <li><a href="pollution.html" class="hover:text-blue-400 transition-colors duration-300">Pollution Solutions</a></li>
+                    <li><a href="Conservation.html" class="hover:text-blue-400 transition-colors duration-300">Conservation Tips</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Get in Touch</h3>
+                <ul class="space-y-4 text-gray-400">
+                    <li class="flex items-start"><svg class="w-5 h-5 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg><span>123 Aqua Street, Oceantown, Planet Earth</span></li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg><a href="mailto:contact@aquasence.com" class="hover:text-blue-400 transition-colors">contact@aquasence.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-8 py-6 border-t border-gray-700">
+            <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-16 flex flex-col sm:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500">© 2025 Aquasence. All Rights Reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="text-sm text-gray-500 hover:text-white">Privacy Policy</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-white">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <!-- Scripts are unchanged -->
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                AOS.init({ duration: 800, once: true });
+                const droplet = document.getElementById('cursor-droplet');
+                if (!('ontouchstart' in window)) {
+                    window.addEventListener('mousemove', (e) => {
+                        droplet.style.opacity = '1';
+                        droplet.style.left = e.clientX + 'px';
+                        droplet.style.top = e.clientY + 'px';
+                    });
+                    document.addEventListener('mouseleave', () => { droplet.style.opacity = '0'; });
+                    const interactiveElements = document.querySelectorAll('a, button');
+                    interactiveElements.forEach(el => {
+                        el.addEventListener('mouseenter', () => droplet.classList.add('grow'));
+                        el.addEventListener('mouseleave', () => droplet.classList.remove('grow'));
+                    });
+                } else {
+                    droplet.style.display = 'none';
+                }
+                
+                // This logic needs to be on the page where the link exists.
+                // It seems to be copied from the index page. We will adjust it.
+                const protectedLink = document.getElementById('protected-link');
+                if (protectedLink) { // Check if the element exists on this page
+                    let isUserLoggedIn = (firebase.auth().currentUser !== null);
+                    
+                    protectedLink.addEventListener('click', function(event) {
+                        if (!isUserLoggedIn) {
+                            event.preventDefault();
+                            alert("Please log in first to see the results!");
+                            window.location.href = "loading.html";
+                        }
+                    });
+
+                    // Update login status when auth state changes
+                    firebase.auth().onAuthStateChanged(user => {
+                        isUserLoggedIn = !!user;
+                    });
+                }
+            });
+        </script>
+        <script
+            src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+        <script
+            src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+        <script
+            src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+        <script src="./JS/index.js"></script>
+    </body>
+</html>
